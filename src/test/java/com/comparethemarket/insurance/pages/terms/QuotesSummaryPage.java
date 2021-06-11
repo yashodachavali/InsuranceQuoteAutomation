@@ -16,9 +16,13 @@ public class QuotesSummaryPage extends BasePage {
 	}
 
 	@FindBy(xpath = "//h2[text()='Summary of key details']")
-	WebElement heading;
+	private WebElement heading;
+
 	@FindBy(xpath = "//div[text()='Your details']")
-	WebElement datailsOfUser;
+	private WebElement datailsOfUser;
+
+	@FindBy(xpath = "//div[@id='LifeInsurance_YourQuotes']/section[3]")
+	private WebElement lifeSearchText;
 
 	public void getInsuranceQuotes() {
 		wait.until(
@@ -31,6 +35,11 @@ public class QuotesSummaryPage extends BasePage {
 
 	public void scrollPage() {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
-		jse.executeScript("window.scrollBy(0,300)");
+		jse.executeScript("arguments[0].scrollIntoView()", lifeSearchText);
+		// jse.executeScript("window.scrollBy(0,1100)");
+		/*
+		 * int yPosition = heading.getLocation().getY();
+		 * jse.executeScript("window.scroll (0, " yPosition + ") ");
+		 */
 	}
 }

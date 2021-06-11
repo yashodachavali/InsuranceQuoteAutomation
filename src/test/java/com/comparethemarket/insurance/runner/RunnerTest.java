@@ -10,6 +10,7 @@ import io.cucumber.junit.CucumberOptions;
 		features = {"src/test/resources/features/quotes.feature"},
 		plugin = {"html:target/cucumber-html-report"},
 		glue = {"com.comparethemarket.insurance.stepdefinition"},
+		
 		monochrome=true,
 		dryRun=false		
 )

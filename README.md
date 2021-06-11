@@ -23,5 +23,8 @@ Once the build is successful, run the tests using below command,
 `mvn clean test`
 ```Note: By default two scenarios would be picked up for execution```
 
+#### Screenshots
+Please check `\test\resources\screenshots` folder to check screenshots 
+
 #### Reports
 Please check `target/cucmber-html-report` file to check the reports

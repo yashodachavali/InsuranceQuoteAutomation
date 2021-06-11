@@ -1,16 +1,13 @@
 package com.comparethemarket.insurance.stepdefinition;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import com.comparethemarket.insurance.pages.demographics.AddressPage;
 import com.comparethemarket.insurance.pages.demographics.ContactPage;
 import com.comparethemarket.insurance.pages.demographics.DateOfBirthpage;
@@ -37,9 +34,8 @@ import io.cucumber.java.en.When;
 public class InsuranceQuoteStepDefinition extends SetUp {
 
 	private static final String ACTUAL_PAGE_TITLE = "Compare Cheap Life Insurance Quotes from £3.99 | Compare the Market";
-	private WebDriverWait wait = new WebDriverWait(driver, 60);
+	private static final String EMAIL_ERROR_MESSAGE = "Please enter a telephone number which begins with 0 and contains only digits.";
 	private HomePage homePage;
-	// private com.comparethemarket.insurance.pages.quote.QuoteTypePage
 	private QuoteTypePage quoteTypePage;
 	private NamePage namePage;
 	private DateOfBirthpage dateOfBirthPage;
@@ -152,12 +148,12 @@ public class InsuranceQuoteStepDefinition extends SetUp {
 	@And("I enter email as {string}")
 	public void i_enter_email(String email) {
 		emailAndPhonenumber = new EmailAndPhoneNumberPage(driver);
-		emailAndPhonenumber.emailId(email);
+		emailAndPhonenumber.inpuptEmailId(email);
 	}
 
 	@And("I enter phonenumber as {string}")
 	public void i_enter_phonenumber(String phonenumber) {
-		emailAndPhonenumber.phoneNumber(phonenumber);
+		emailAndPhonenumber.inputPhoneNumber(phonenumber);
 		emailAndPhonenumber.clickOnNextButton();
 	}
 
@@ -210,6 +206,21 @@ public class InsuranceQuoteStepDefinition extends SetUp {
 	@Then("I should redirected to user journey form")
 	public void i_should_redirected_to_user_journey_form() {
 		homePage.verifyJourneyPageIsDisplayed();
+	}
+
+	@Then("I should get error message")
+	public void i_should_get_error_message() throws IOException {
+		String error = emailAndPhonenumber.getPhoneErrorMessage();
+		assertEquals(EMAIL_ERROR_MESSAGE, error);
+		ScreenShotUtil.takeScreenShotAndCopy("ErrorMessage", driver);
+	}
+
+	@And("I click on next button page should not move ahead")
+	public void i_click_on_next_button_page_should_not_move_ahead() {
+		emailAndPhonenumber.clickOnNextButton();
+		String completeQuestion_Text = emailAndPhonenumber.getCompleteQuestionText();
+		assertNotNull(completeQuestion_Text);
+		emailAndPhonenumber.viewQuestionClick();
 	}
 
 }

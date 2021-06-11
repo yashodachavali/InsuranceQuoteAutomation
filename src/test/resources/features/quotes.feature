@@ -27,3 +27,22 @@ Scenario: user enters valid information successfully gets the insurence quotes
 	Then I should land on quotes summary page
 	And I click on "Your details" link 
 	Then I should redirected to user journey form
+	
+	Scenario: validate user enters invalid information cannot proceed journey and error message should be displayed
+	Given I access the Comparethemarket url "https://www.comparethemarket.com/life-insurance" 
+	When I click on "Get a quote" button 
+	Then User journey form should be displayed 
+	When I click on quoteType "just myself"
+	And I enter the name as "Mr" , "Insurance" , "Quote" 
+	And I enter date of birth as  "6" , "January" , "1980"
+	And I enter smoker selection as "No"
+    And I enter term as "LevelTerm"
+    And I enter coverperiod as "20"
+	And I enter minimum amount as "25,000"
+	And I enter criticalIllness as "yes"
+	And I selected "Additional" cover
+	And I enter additionalamount "15,000"
+	And I enter email as "widecem309@mailreds.com"
+	And I enter phonenumber as "DF83UFJ "
+	Then I should get error message
+	And I click on next button page should not move ahead
