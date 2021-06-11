@@ -12,7 +12,7 @@ public class ContactPage extends BasePage {
 		super(driver);
 	}
 
-	private By Contact = By.cssSelector("[value='doNotContact']");
+	private By Contact = By.id("LifeInsurance_ContactPreferences_ContactPreferences_doNotContact");
 	private By ContactPhone = By.cssSelector("[value='telephone']");
 	private By ContactPost = By.cssSelector("[value='post']");
 	private By ContactEmail = By.cssSelector("[value='email']");

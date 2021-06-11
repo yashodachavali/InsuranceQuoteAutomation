@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
 
+import com.comparethemarket.insurance.util.TestUtils;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;

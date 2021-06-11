@@ -1,4 +1,4 @@
-package com.comparethemarket.insurance.stepdefinition;
+package com.comparethemarket.insurance.util;
 
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;

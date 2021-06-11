@@ -17,18 +17,20 @@ public class QuotesSummaryPage extends BasePage {
 
 	@FindBy(xpath = "//h2[text()='Summary of key details']")
 	WebElement heading;
-	@FindBy(xpath="//div[text()='Your details']")
+	@FindBy(xpath = "//div[text()='Your details']")
 	WebElement datailsOfUser;
 
 	public void getInsuranceQuotes() {
-		wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//h2[text()='Summary of key details']")));
-		
+		wait.until(
+				ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//h2[text()='Summary of key details']")));
 	}
+
 	public void getYourDetails() {
 		datailsOfUser.click();
 	}
+
 	public void scrollPage() {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
-		jse.executeScript("window.scrollBy(0,250)");
+		jse.executeScript("window.scrollBy(0,300)");
 	}
 }

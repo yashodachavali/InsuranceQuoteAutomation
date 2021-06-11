@@ -25,5 +25,5 @@ Scenario: user enters valid information successfully gets the insurence quotes
 	And I confirm the termsandconditions
 	And I click on the Get your quotes
 	Then I should land on quotes summary page
-	Then I click on "Your details" link 
-	And I redirected to user journey form 
+	And I click on "Your details" link 
+	Then I should redirected to user journey form

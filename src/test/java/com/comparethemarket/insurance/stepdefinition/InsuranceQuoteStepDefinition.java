@@ -2,6 +2,7 @@ package com.comparethemarket.insurance.stepdefinition;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -25,6 +26,7 @@ import com.comparethemarket.insurance.pages.quote.QuoteTypePage;
 import com.comparethemarket.insurance.pages.terms.GuideandMedicalPage;
 import com.comparethemarket.insurance.pages.terms.QuotesSummaryPage;
 import com.comparethemarket.insurance.pages.terms.TermsandConditions;
+import com.comparethemarket.insurance.util.ScreenShotUtil;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -73,7 +75,7 @@ public class InsuranceQuoteStepDefinition extends SetUp {
 	public void user_registration_form_should_be_displayed() {
 		homePage.verifyJourneyPageIsDisplayed();
 	}
-	
+
 	@When("I click on quoteType {string}")
 	public void i_click_on_quotetype(String strArg1) {
 		quoteTypePage = new QuoteTypePage(driver);
@@ -98,7 +100,7 @@ public class InsuranceQuoteStepDefinition extends SetUp {
 		dateOfBirthPage.yearpicker(year);
 		dateOfBirthPage.clickOnNextButton();
 	}
-	
+
 	@And("I enter smoker selection as {string}")
 	public void i_enter_smoker_selection(String smokerselection) {
 		smokeValidationPage = new SmokevalidationPage(driver);
@@ -133,7 +135,7 @@ public class InsuranceQuoteStepDefinition extends SetUp {
 		illNessPage = new CriticalIllnessPage(driver);
 		illNessPage.criticalillnessselection().click();
 	}
-	
+
 	@And("I selected {string} cover")
 	public void i_selected_cover(String coverageType) {
 		illNessPage.additionalCover().click();
@@ -180,7 +182,7 @@ public class InsuranceQuoteStepDefinition extends SetUp {
 		guideandMedicalPage.clickOnNextButton();
 
 	}
-	
+
 	@And("I confirm the termsandconditions")
 	public void i_confirm_the_termsandconditions() {
 		termsAndConditionsPage = new TermsandConditions(driver);
@@ -193,28 +195,21 @@ public class InsuranceQuoteStepDefinition extends SetUp {
 	}
 
 	@Then("I should land on quotes summary page")
-	public void i_should_land_on_quotes_summary_page() {
+	public void i_should_land_on_quotes_summary_page() throws IOException {
 		quoteSummaryPage = new QuotesSummaryPage(driver);
 		quoteSummaryPage.getInsuranceQuotes();
 		quoteSummaryPage.scrollPage();
-		//take screenshots
+		ScreenShotUtil.takeScreenShotAndCopy("quotesSummary", driver);
 	}
 
-    @And("I click on {string} link ")
-    public void i_click_on_detailsLink(String detailsLink) throws Throwable {
-    	quoteSummaryPage.getYourDetails();
-    }
+	@And("I click on {string} link")
+	public void i_click_on_link(String string) {
+		quoteSummaryPage.getYourDetails();
+	}
 
-    @Then("I click on {string} link")
-    public void i_click_on_link(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        //throw new io.cucumber.java.PendingException();
-    	quoteSummaryPage.getYourDetails();
-    }
-
-	@And("I redirected to user journey form ")
-    public void i_redirected_to_user_journey_form() throws Throwable {
+	@Then("I should redirected to user journey form")
+	public void i_should_redirected_to_user_journey_form() {
 		homePage.verifyJourneyPageIsDisplayed();
-    }
+	}
 
 }
