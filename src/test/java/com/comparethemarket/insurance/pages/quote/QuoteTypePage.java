@@ -11,19 +11,20 @@ public class QuoteTypePage extends BasePage {
 		super(driver);
 	}
 
-	private By singleQuote = By.xpath("//input[@id='LifeInsurance_WhoToCover_WhoToCover_JM']");
+	private By myselfQuoteElement = By.xpath("//input[@id='LifeInsurance_WhoToCover_WhoToCover_JM']");
 	private By familyQuote = By.cssSelector("input[id='LifeInsurance_WhoToCover_WhoToCover_MAAP']");
 	private By nextButton = By.id("NextButton");
 
-	public void singleQuoteClick() {
-		driver.findElement(singleQuote);
+	public void clickOnMyselfQuote() {
+		driver.findElement(myselfQuoteElement).click();
 	}
 
 	public void familyQuoteClick() {
 		driver.findElement(familyQuote);
 	}
 
-	public void nextButtonClick() {
-		driver.findElement(nextButton);
-	}
+	/*
+	 * public void clickOnNextButton() { driver.findElement(nextButton).click(); }
+	 */
+
 }

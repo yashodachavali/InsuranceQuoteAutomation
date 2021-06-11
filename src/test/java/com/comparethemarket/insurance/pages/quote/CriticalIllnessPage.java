@@ -1,9 +1,17 @@
 package com.comparethemarket.insurance.pages.quote;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class CriticalIllnessPage {
+import com.comparethemarket.insurance.common.BasePage;
+
+public class CriticalIllnessPage extends BasePage{
+	
+	public CriticalIllnessPage(WebDriver driver) {
+		super(driver);
+	}
+
 	
 	@FindBy(id="LifeInsurance_CriticalIllnessCover_CriticalIllnessCover_YES")
 	private WebElement criticalillness;
@@ -17,7 +25,7 @@ public class CriticalIllnessPage {
 	@FindBy(id="LifeInsurance_CriticalIllnessCover_CriticalIllnessCoverType_C")
 	private WebElement combined;
 	
-	@FindBy(css=".Input.invalid")
+	@FindBy(id="LifeInsurance_CriticalIllnessCover_CriticalIllnessAmount")
 	private WebElement additionalAmount;
 	
 	public WebElement criticalillnessselection() {

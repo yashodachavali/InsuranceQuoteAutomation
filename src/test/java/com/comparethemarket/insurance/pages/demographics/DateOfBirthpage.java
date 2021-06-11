@@ -19,21 +19,27 @@ public class DateOfBirthpage extends BasePage {
 
 	public void datepicker(String value) {
 		WebElement daydropdown = driver.findElement(day);
+		daydropdown.click();
 		Select dropdown = new Select(daydropdown);
 		dropdown.selectByVisibleText(value);
+
 	}
 
-	public void monthpicker(String value1) {
+	public void monthpicker(String monthValue) {
+
 		WebElement monthdropdown = driver.findElement(month);
+		monthdropdown.click();
 		Select dropdown = new Select(monthdropdown);
-		dropdown.selectByVisibleText(value1);
-
+		dropdown.selectByVisibleText(monthValue);
+		driver.findElement(month).sendKeys(monthValue);
 	}
 
-	public void yearpicker(String value2) {
+	public void yearpicker(String yearValue) {
+
 		WebElement yeardropdown = driver.findElement(year);
+		yeardropdown.click();
 		Select dropdown = new Select(yeardropdown);
-		dropdown.selectByVisibleText(value2);
+		dropdown.selectByVisibleText(yearValue);
 
 	}
 

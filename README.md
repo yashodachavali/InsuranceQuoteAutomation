@@ -16,7 +16,7 @@ Note: Ensure Maven and Java are configured in local environmental variables
 #### Pre-Requisite
 Project is developed with windows chrome (91 version) driver exe file (refer to `/test/resources/driver/chromedriver.exe`),
 and this path is setup in `/test/resources/TestData.properties` file under `chrome.driver.path` property.
-```Note: please change `chrome.driver.path` to `/test/resources/driver/chromedriver` ```
+```Note: please change `chrome.driver.path` to `/test/resources/drivers/chromedriver` ```
 
 #### Test
 Once the build is successful, run the tests using below command,

@@ -12,13 +12,13 @@ public class TermsandConditions extends BasePage {
 	}
 
 	private By confirm = By.id("LifeInsurance_AcceptTermsAndConditions_AcceptTermsAndConditions");
-	private By getYourQuotes = By.xpath("//button[@type='submit']");
+	private By quotesButton = By.xpath("//button[@type='submit']");
 
 	public void confirmDetails() {
 		driver.findElement(confirm).click();
 	}
 
-	public void getTheQuotes() {
-		driver.findElement(getYourQuotes).click();
+	public void clickOnQuoteButton() {
+		driver.findElement(quotesButton).click();
 	}
 }

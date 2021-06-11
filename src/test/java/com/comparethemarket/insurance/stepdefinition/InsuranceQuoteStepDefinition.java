@@ -1,18 +1,29 @@
 package com.comparethemarket.insurance.stepdefinition;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.comparethemarket.insurance.pages.demographics.AddressPage;
+import com.comparethemarket.insurance.pages.demographics.ContactPage;
 import com.comparethemarket.insurance.pages.demographics.DateOfBirthpage;
+import com.comparethemarket.insurance.pages.demographics.EmailAndPhoneNumberPage;
 import com.comparethemarket.insurance.pages.demographics.NamePage;
 import com.comparethemarket.insurance.pages.home.HomePage;
 import com.comparethemarket.insurance.pages.home.SmokevalidationPage;
 import com.comparethemarket.insurance.pages.quote.CoverPeriodPage;
+import com.comparethemarket.insurance.pages.quote.CriticalIllnessPage;
 import com.comparethemarket.insurance.pages.quote.LevelTermPage;
+import com.comparethemarket.insurance.pages.quote.MinAmountCoverPage;
+import com.comparethemarket.insurance.pages.quote.QuoteTypePage;
+import com.comparethemarket.insurance.pages.terms.GuideandMedicalPage;
+import com.comparethemarket.insurance.pages.terms.QuotesSummaryPage;
 import com.comparethemarket.insurance.pages.terms.TermsandConditions;
 
 import io.cucumber.datatable.DataTable;
@@ -23,85 +34,187 @@ import io.cucumber.java.en.When;
 
 public class InsuranceQuoteStepDefinition extends SetUp {
 
-	@Given("^I access the Comparethemarket url \"([^\"]*)\"$")
-	public void i_access_the_comparethemarket_url_something(String applicationUrl) throws Throwable {
+	private static final String ACTUAL_PAGE_TITLE = "Compare Cheap Life Insurance Quotes from £3.99 | Compare the Market";
+	private WebDriverWait wait = new WebDriverWait(driver, 60);
+	private HomePage homePage;
+	// private com.comparethemarket.insurance.pages.quote.QuoteTypePage
+	private QuoteTypePage quoteTypePage;
+	private NamePage namePage;
+	private DateOfBirthpage dateOfBirthPage;
+	private SmokevalidationPage smokeValidationPage;
+	private CoverPeriodPage coverPeriodPage;
+	private LevelTermPage levelTermPage;
+	private MinAmountCoverPage minAmountCoverPage;
+	private CriticalIllnessPage illNessPage;
+	private EmailAndPhoneNumberPage emailAndPhonenumber;
+	private AddressPage addressPage;
+	private ContactPage contactPage;
+	private TermsandConditions termsAndConditionsPage;
+	private GuideandMedicalPage guideandMedicalPage;
+	private QuotesSummaryPage quoteSummaryPage;
+
+	@Given("I access the Comparethemarket url {string}")
+	public void i_access_the_comparethemarket_url_something(String applicationUrl) {
 		driver.get(applicationUrl);
-	    String expTitle = driver.getTitle();
+		homePage = new HomePage(driver);
+		homePage.acceptCookie();
+		String expTitle = driver.getTitle();
+		assertEquals(expTitle, ACTUAL_PAGE_TITLE);
 	}
 
-	@When("^I click on \"([^\"]*)\" button$")
-	public void i_click_on_something_button(String strArg1) throws Throwable {
-		HomePage l = new HomePage(driver);
-		l.getQuoteclick();
+	@When("I click on {string} button")
+	public void i_click_on_getQuote_button(String quoteButtonName) {
+		WebElement element = (WebElement) homePage.clickQuoteButton();
+		assertEquals(quoteButtonName, element.getText());
+		element.click();
 	}
 
-	@When("^I enter the following details$")
-	public void i_enter_the_following_details(DataTable data) throws Throwable {
+	@Then("User journey form should be displayed")
+	public void user_registration_form_should_be_displayed() {
+		homePage.verifyJourneyPageIsDisplayed();
+	}
+	
+	@When("I click on quoteType {string}")
+	public void i_click_on_quotetype(String strArg1) {
+		quoteTypePage = new QuoteTypePage(driver);
+		quoteTypePage.clickOnMyselfQuote();
+		quoteTypePage.clickOnNextButton();
+	}
+
+	@And("I enter the name as {string} , {string} , {string}")
+	public void i_enter_the_nameDetails(String hono, String firstName, String lastName) {
+		namePage = new NamePage(driver);
+		namePage.selectMrTitle();
+		namePage.enterFirstName(firstName);
+		namePage.enterLastName(lastName);
+		namePage.clickOnNextButton();
+	}
+
+	@And("I enter date of birth as  {string} , {string} , {string}")
+	public void i_enter_dateOfBirth(String date, String month, String year) {
+		dateOfBirthPage = new DateOfBirthpage(driver);
+		dateOfBirthPage.datepicker(date);
+		dateOfBirthPage.monthpicker(month);
+		dateOfBirthPage.yearpicker(year);
+		dateOfBirthPage.clickOnNextButton();
+	}
+	
+	@And("I enter smoker selection as {string}")
+	public void i_enter_smoker_selection(String smokerselection) {
+		smokeValidationPage = new SmokevalidationPage(driver);
+		smokeValidationPage.nonSmokingPersonSelection();
+		assertEquals(smokerselection, "No");
+		smokeValidationPage.clickOnNextButton();
+	}
+
+	@And("I enter term as {string}")
+	public void i_enter_term(String term) {
+		levelTermPage = new LevelTermPage(driver);
+		levelTermPage.levelTermselection().click();
+		levelTermPage.clickOnNextButton();
+	}
+
+	@And("I enter coverperiod as {string}")
+	public void i_enter_coverperiod(String coverPeriodvalue) {
+		coverPeriodPage = new CoverPeriodPage(driver);
+		coverPeriodPage.coverperioddata(coverPeriodvalue);
+		coverPeriodPage.clickOnNextButton();
+	}
+
+	@And("I enter minimum amount as {string}")
+	public void i_enter_minimum_amount(String amount) {
+		minAmountCoverPage = new MinAmountCoverPage(driver);
+		minAmountCoverPage.minAmountcover(amount);
+		minAmountCoverPage.clickOnNextButton();
+	}
+
+	@And("I enter criticalIllness as {string}")
+	public void i_enter_criticalillness(String option) {
+		illNessPage = new CriticalIllnessPage(driver);
+		illNessPage.criticalillnessselection().click();
+	}
+	
+	@And("I selected {string} cover")
+	public void i_selected_cover(String coverageType) {
+		illNessPage.additionalCover().click();
+	}
+
+	@And("I enter additionalamount {string}")
+	public void i_enter_additionalamount(String additionalAmount) {
+		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		jse.executeScript("window.scrollBy(0,250)");
+		illNessPage.additionalAmount().sendKeys(additionalAmount);
+		illNessPage.clickOnNextButton();
+	}
+
+	@And("I enter email as {string}")
+	public void i_enter_email(String email) {
+		emailAndPhonenumber = new EmailAndPhoneNumberPage(driver);
+		emailAndPhonenumber.emailId(email);
+	}
+
+	@And("I enter phonenumber as {string}")
+	public void i_enter_phonenumber(String phonenumber) {
+		emailAndPhonenumber.phoneNumber(phonenumber);
+		emailAndPhonenumber.clickOnNextButton();
+	}
+
+	@And("I enter address as")
+	public void i_enter_address_as(DataTable data) {
 		List<List<String>> obj = data.asLists();
-		String name = obj.get(0).get(0);
-		String[] namearray = name.split("");
-/*
-		NamePage n = new NamePage();
-		n.mrTitleSelect();
-		n.firstName(namearray[1]);
-		n.surName(namearray[2]);
-		String Dob = obj.get(0).get(1);
-		String[] dobarray = Dob.split("");
-		DateOfBirthpage d = new DateOfBirthpage();
-		d.datepicker(dobarray[0]);
-		d.monthpicker(dobarray[1]);
-		d.yearpicker(dobarray[2]);
-		SmokevalidationPage s = new SmokevalidationPage(driver);
-		s.nonSmokingPersonSelection();
-		LevelTermPage l = new LevelTermPage(driver);
-		l.levelTermselection().click();
-		String time = obj.get(0).get(2);
-		String[] timearray = time.split("");
-		CoverPeriodPage c = new CoverPeriodPage();
-		c.coverperioddata(timearray[0]); */
-		/*
-		 * MinAmountCover m = new MinAmountCover(driver); String amount =
-		 * obj.get(0).get(3); m.minAmountcover(amount); CriticalIllness ci = new
-		 * CriticalIllness(driver); ci.criticalillnessselection().click();
-		 * ci.additionalAmount().click(); String addAmount = obj.get(0).get(4);
-		 * ci.additionalAmount().sendKeys(addAmount); EmailandPhoneNumber e = new
-		 * EmailandPhoneNumber(driver); String Eid = obj.get(0).get(5); String Phno =
-		 * obj.get(0).get(5); e.emailId(Eid); e.phoneNumber(Phno); Address a = new
-		 * Address(driver); String addresswithpostalcode = obj.get(0).get(6); String[]
-		 * addressarray = addresswithpostalcode.split(",");
-		 * a.adresssOption(addresswithpostalcode); a.postalCode(addressarray[2]);
-		 * a.findMyAddress(); a.addressSelection(); ContactType ct = new
-		 * ContactType(driver); ct.donotContact().click(); TermsandConditions tc = new
-		 * TermsandConditions(driver); tc.confirmDetails(); tc.getTheQuotes();
-		 */
-
+		String addressReading = obj.get(0).get(0);
+		String[] addressInDetail = addressReading.split(",");
+		addressPage = new AddressPage(driver);
+		addressPage.postalCode(addressInDetail[2]);
+		addressPage.findMyAddress();
+		addressPage.addressSelection();
+		addressPage.clickOnNextButton();
 	}
 
-	@Then("^User registration form should be displayed$")
-	public void user_registration_form_should_be_displayed() throws Throwable {
+	@And("I enter contacttype as Do not contact")
+	public void i_enter_contacttype() {
+		contactPage = new ContactPage(driver);
+		contactPage.donotContact().click();
+		contactPage.clickOnNextButton();
+		guideandMedicalPage = new GuideandMedicalPage(driver);
+		guideandMedicalPage.clickOnNextButton();
 
 	}
-
-	@Then("^I landed on the enquiry page with summery of key details and Insurance quotes$")
-	public void i_landed_on_the_enquiry_page_with_summery_of_key_details_and_insurance_quotes() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 20);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h2[text()='Summary of key details']")));
-
+	
+	@And("I confirm the termsandconditions")
+	public void i_confirm_the_termsandconditions() {
+		termsAndConditionsPage = new TermsandConditions(driver);
+		termsAndConditionsPage.confirmDetails();
 	}
 
-	@Then("^validate error message is displaying or not$")
-	public void validate_error_message_is_displaying_or_not() throws Throwable {
-
+	@And("I click on the Get your quotes")
+	public void i_click_on_the_get_your_quotes() {
+		termsAndConditionsPage.clickOnQuoteButton();
 	}
 
-	@And("^I click on the \"([^\"]*)\"$")
-	public void i_click_on_the_something(String strArg1) throws Throwable {
-
+	@Then("I should land on quotes summary page")
+	public void i_should_land_on_quotes_summary_page() {
+		quoteSummaryPage = new QuotesSummaryPage(driver);
+		quoteSummaryPage.getInsuranceQuotes();
+		quoteSummaryPage.scrollPage();
+		//take screenshots
 	}
 
-	@And("^I click on \"([^\"]*)\" link redirected to user registration form $")
-	public void i_click_on_something_link_redirected_to_user_registration_form(String strArg1) throws Throwable {
-		// driver.findElement(By.)
-	}
+    @And("I click on {string} link ")
+    public void i_click_on_detailsLink(String detailsLink) throws Throwable {
+    	quoteSummaryPage.getYourDetails();
+    }
+
+    @Then("I click on {string} link")
+    public void i_click_on_link(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        //throw new io.cucumber.java.PendingException();
+    	quoteSummaryPage.getYourDetails();
+    }
+
+	@And("I redirected to user journey form ")
+    public void i_redirected_to_user_journey_form() throws Throwable {
+		homePage.verifyJourneyPageIsDisplayed();
+    }
 
 }
