@@ -7,10 +7,9 @@ import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features = {"src/test/resources/features/quotes.feature"},
+		features = {"src/test/resources/features/newquotesimplementation.feature"},
 		plugin = {"html:target/cucumber-html-report"},
 		glue = {"com.comparethemarket.insurance.stepdefinition"},
-		
 		monochrome=true,
 		dryRun=false		
 )

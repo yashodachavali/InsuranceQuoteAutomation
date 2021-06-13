@@ -1,13 +1,18 @@
 package com.comparethemarket.insurance.pages.terms;
 
+import java.io.File;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.comparethemarket.insurance.common.BasePage;
+
+import io.cucumber.messages.internal.com.google.protobuf.ByteString.Output;
 
 public class QuotesSummaryPage extends BasePage {
 
@@ -36,10 +41,7 @@ public class QuotesSummaryPage extends BasePage {
 	public void scrollPage() {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
 		jse.executeScript("arguments[0].scrollIntoView()", lifeSearchText);
-		// jse.executeScript("window.scrollBy(0,1100)");
-		/*
-		 * int yPosition = heading.getLocation().getY();
-		 * jse.executeScript("window.scroll (0, " yPosition + ") ");
-		 */
+		
+		
 	}
 }
