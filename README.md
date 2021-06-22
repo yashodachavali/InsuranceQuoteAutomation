@@ -8,23 +8,23 @@ This project contains automation test for life insurance quote web application
 #### Build
 Clone the project form below repository:
 
-``https://github.com/yashodachavali/InsuranceQuoteAutomation.git```
-Run the below command to build and download the dependencies required for the project
-`mvn clean`
+ * git clone <a>https://github.com/yashodachavali/InsuranceQuoteAutomation.git</a>
+ * mvn clean
+ 
 Note: Ensure Maven and Java are configured in local environmental variables 
 
 #### Pre-Requisite
-Project is developed with windows chrome (91 version) driver exe file (refer to `/test/resources/driver/chromedriver.exe`),
-and this path is setup in `/test/resources/TestData.properties` file under `chrome.driver.path` property.
-```Note: please change `chrome.driver.path` to `/test/resources/drivers/chromedriver` ```
+ * Project is developed with windows chrome (91 version) driver exe file (refer to **/test/resources/driver/chromedriver.exe**).
+ * chrome driver path is setup in **/test/resources/TestData.properties** file under **chrome.driver.path** property.
+ *  Please change **chrome.driver.path** to **/test/resources/drivers/chromedriver** 
 
 #### Test
-Once the build is successful, run the tests using below command,
-`mvn clean test`
-```Note: By default two scenarios would be picked up for execution```
+Once the build is successful, run **mvn clean test** command
+	
+Note: By default two scenarios would be picked up for execution
 
 #### Screenshots
-Please check `\test\resources\screenshots` folder to check screenshots 
+Please check *\test\resources\screenshots* folder to check screenshots 
 
 #### Reports
-Please check `target/cucmber-html-report` file to check the reports
+Please check *target/cucmber-html-report* file to check the reports
